@@ -17,7 +17,9 @@ export default function DataItem() {
 	// Comments state
 	const [comment, setComment] = createSignal("");
 	const [comments, setComments] = createSignal([]);
-	const [status, setStatus] = createSignal(item.status ?? false);
+	const [status, setStatus] = createSignal(
+		item.status ?? (item.status === null ? null : false)
+	);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -136,7 +138,16 @@ export default function DataItem() {
 										<pre class="whitespace-pre-wrap">{item.caption}</pre>
 									</div>
 								</div>
-								<p>Status: {status() ? "Approved" : "Rejected"}</p>
+								<p>
+									Status:{" "}
+									{status() === true
+										? "Approved"
+										: status() === false
+										? "Rejected"
+										: status() === null
+										? "Not Reviewed"
+										: "For Review"}
+								</p>
 
 								{/* Buttons to modify status */}
 							</div>

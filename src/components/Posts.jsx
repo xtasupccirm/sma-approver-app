@@ -63,7 +63,7 @@ function Home(props) {
 								<A href={`/data/${item.id}`}>
 									<img src={item.imageurl} alt="" />
 									<p class="absolute bottom-0 bg-cyan-500 w-full">
-										SCHEDULED {item.postAtSpecificTime}
+										SCHEDULED {convertToEasternTime(item.postAtSpecificTime)}
 									</p>
 								</A>
 							</li>
@@ -77,8 +77,26 @@ function Home(props) {
 
 // Function to convert ISO 8601 time to Eastern Time (America/New_York)
 function convertToEasternTime(isoTime) {
-	const createdAtDate = new Date(isoTime);
-	return createdAtDate.toLocaleString("en-US", {
+	// Parse the custom date format into a Date object
+	const [dateString, timeString] = isoTime.split(" ");
+	const [month, day, year] = dateString.split("/");
+	const [hours, minutes] = timeString.split(":");
+	const easternTime = new Date(year, month - 1, day, hours, minutes);
+
+	// Convert to Eastern Time and add a day
+	easternTime.toLocaleString("en-US", { timeZone: "America/New_York" });
+	easternTime.setDate(easternTime.getDate());
+
+	// Format the date to include day and time in Eastern Time
+	const formattedDate = easternTime.toLocaleString("en-US", {
 		timeZone: "America/New_York",
+		weekday: "short",
+		month: "numeric",
+		day: "numeric",
+		year: "numeric",
+		hour: "numeric",
+		minute: "numeric",
 	});
+
+	return formattedDate;
 }
