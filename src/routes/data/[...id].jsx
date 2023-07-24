@@ -121,61 +121,65 @@ export default function DataItem() {
 					{/* Display the content of the data item */}
 					{item ? (
 						<>
-							{/* Display comments */}
-							<p>Status: {status() ? "Approved" : "Rejected"}</p>
-
-							{/* Buttons to modify status */}
-							<div class="flex gap-5">
-								<button
-									onClick={handleApprove}
-									class="bg-green-500 p-2 rounded-lg text-white"
-								>
-									Approve
-								</button>
-								<button
-									onClick={handleReject}
-									class="bg-red-500 p-2 rounded-lg text-white"
-								>
-									Reject
-								</button>
-							</div>
-
-							<ul>
-								{comments().map((comment, index) => (
-									<li key={index}>{comment}</li>
-								))}
-							</ul>
-
 							{/* Form for submitting a new comment */}
-							<h3 class="p-2">Revision Comment:</h3>
-							<form
-								onSubmit={handleSubmit}
-								class="flex mb-4 rounded-lg border pl-2"
-							>
-								<input
-									type="text"
-									value={comment()}
-									onInput={(e) => setComment(e.target.value)}
-									placeholder="Write your comment for revision..."
-									class="w-1/2"
-								/>
-								<button
-									type="submit"
-									class="bg-blue-500 p-2 rounded-lg text-white"
-								>
-									Submit
-								</button>
-							</form>
+							<h2>Scheduled For {item.postAtSpecificTime}</h2>
 							<div class="grid md:grid-cols-2 gap-6">
-								<img
-									src={item.imageurl}
-									alt={item.caption}
-									class="max-h-[588px]"
-								/>
+								<div>
+									<img
+										src={item.imageurl}
+										alt={item.caption}
+										class="max-h-[588px]"
+									/>
+								</div>
 								<div class="relative">
 									<div class="max-h-[588px] overflow-y-auto shadow-md p-2">
 										<pre class="whitespace-pre-wrap">{item.caption}</pre>
 									</div>
+								</div>
+								<p>Status: {status() ? "Approved" : "Rejected"}</p>
+
+								{/* Buttons to modify status */}
+							</div>
+							<div class="grid md:grid-cols-2">
+								<div class="">
+									<button
+										onClick={handleApprove}
+										class="bg-green-500 p-2 rounded-lg text-white mr-5"
+									>
+										Approve
+									</button>
+									<button
+										onClick={handleReject}
+										class="bg-red-500 p-2 rounded-lg text-white"
+									>
+										Reject
+									</button>
+									<ul>
+										{comments().map((comment, index) => (
+											<li key={index}>{comment}</li>
+										))}
+									</ul>
+								</div>
+
+								<div id="form">
+									<h3 class="p-2">Revision Comment:</h3>
+									<form
+										onSubmit={handleSubmit}
+										class="flex mb-4 rounded-lg border pl-2"
+									>
+										<textarea
+											value={comment()}
+											onInput={(e) => setComment(e.target.value)}
+											placeholder="Write your comment for revision..."
+											class="w-full h-24 resize-y focus:outline-none"
+										/>
+										<button
+											type="submit"
+											class="bg-blue-500 p-2 rounded-lg text-white"
+										>
+											Submit
+										</button>
+									</form>
 								</div>
 							</div>
 						</>
