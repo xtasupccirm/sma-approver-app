@@ -17,6 +17,7 @@ export default function DataItem() {
 	// Comments state
 	const [comment, setComment] = createSignal("");
 	const [comments, setComments] = createSignal([]);
+	const [status, setStatus] = createSignal(item.status);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -73,8 +74,9 @@ export default function DataItem() {
 
 			if (response.ok) {
 				console.log("Status updated to Approve.");
-				// Update the status in the local data
+				// Update the status in the local data and the signal
 				item.status = true;
+				setStatus(true);
 			} else {
 				console.error("Error updating status:", response.statusText);
 			}
@@ -101,8 +103,9 @@ export default function DataItem() {
 
 			if (response.ok) {
 				console.log("Status updated to Reject.");
-				// Update the status in the local data
+				// Update the status in the local data and the signal
 				item.status = false;
+				setStatus(false);
 			} else {
 				console.error("Error updating status:", response.statusText);
 			}
@@ -119,7 +122,7 @@ export default function DataItem() {
 					{item ? (
 						<>
 							{/* Display comments */}
-							<p>Status: {item.status}</p>
+							<p>Status: {status() ? "Approved" : "Rejected"}</p>
 
 							{/* Buttons to modify status */}
 							<div class="flex gap-5">

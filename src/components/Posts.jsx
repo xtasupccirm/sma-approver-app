@@ -47,9 +47,7 @@ export default function Posts() {
 function Home(props) {
 	const [loader, setLoader] = createSignal(false);
 	const { data } = props;
-	console.log("I'm home");
 	setLoader(true);
-	console.log(data);
 
 	return (
 		<div>
@@ -61,10 +59,10 @@ function Home(props) {
 							<li class="relative">
 								<A href={`/data/${item.id}`}>
 									<img src={item.imageurl} alt="" />
+									<p class="absolute bottom-0 bg-cyan-500 w-full">
+										SCHEDULED {convertToEasternTime(item.created_at)}
+									</p>
 								</A>
-								<p class="absolute bottom-0 bg-cyan-500 w-full">
-									SCHEDULED {convertToEasternTime(item.created_at)}
-								</p>
 							</li>
 						)}
 					</For>
