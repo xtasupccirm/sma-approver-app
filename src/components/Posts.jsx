@@ -31,8 +31,11 @@ export default function Posts() {
 		<>
 			<section class="secpad">
 				<section class="maxwidth">
-					<h1>MySolidJS App</h1>
-					<Show when={loading()}>
+					<h1>My Social Media Posts</h1>
+					<Show
+						when={loading()}
+						fallback={<div>Data is loading please wait...</div>}
+					>
 						<Routes>
 							<Route path="/" element={<Home data={data()} />} />
 							<Route path="/data/:id" element={<DataItem data={data()} />} />
@@ -60,7 +63,7 @@ function Home(props) {
 								<A href={`/data/${item.id}`}>
 									<img src={item.imageurl} alt="" />
 									<p class="absolute bottom-0 bg-cyan-500 w-full">
-										SCHEDULED {convertToEasternTime(item.created_at)}
+										SCHEDULED {item.postAtSpecificTime}
 									</p>
 								</A>
 							</li>

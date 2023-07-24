@@ -17,7 +17,7 @@ export default function DataItem() {
 	// Comments state
 	const [comment, setComment] = createSignal("");
 	const [comments, setComments] = createSignal([]);
-	const [status, setStatus] = createSignal(item.status);
+	const [status, setStatus] = createSignal(item.status ?? false);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
