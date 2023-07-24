@@ -124,7 +124,7 @@ export default function DataItem() {
 					{item ? (
 						<>
 							{/* Form for submitting a new comment */}
-							<h2>Scheduled For {item.postAtSpecificTime}</h2>
+							<h2>SCHEDULED {convertToEasternTime(item.postAtSpecificTime)}</h2>
 							<div class="grid md:grid-cols-2 gap-6">
 								<div>
 									<img
@@ -201,4 +201,29 @@ export default function DataItem() {
 			</section>
 		</>
 	);
+}
+
+function convertToEasternTime(isoTime) {
+	// Parse the custom date format into a Date object
+	const [dateString, timeString] = isoTime.split(" ");
+	const [month, day, year] = dateString.split("/");
+	const [hours, minutes] = timeString.split(":");
+	const easternTime = new Date(year, month - 1, day, hours, minutes);
+
+	// Convert to Eastern Time and add a day
+	easternTime.toLocaleString("en-US", { timeZone: "America/New_York" });
+	easternTime.setDate(easternTime.getDate());
+
+	// Format the date to include day and time in Eastern Time
+	const formattedDate = easternTime.toLocaleString("en-US", {
+		timeZone: "America/New_York",
+		weekday: "short",
+		month: "numeric",
+		day: "numeric",
+		year: "numeric",
+		hour: "numeric",
+		minute: "numeric",
+	});
+
+	return formattedDate;
 }
