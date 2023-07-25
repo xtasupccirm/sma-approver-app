@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, For } from "solid-js";
 import { useParams } from "@solidjs/router";
 import { database } from "~/api/dataStore";
 
@@ -16,10 +16,15 @@ export default function DataItem() {
 
 	// Comments state
 	const [comment, setComment] = createSignal("");
-	const [comments, setComments] = createSignal([]);
+	const [comments, setComments] = createSignal(
+		item.comment !== null ? item.comment : false
+	);
+
 	const [status, setStatus] = createSignal(
 		item.status ?? (item.status === null ? null : false)
 	);
+
+	console.log(comments());
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -143,7 +148,7 @@ export default function DataItem() {
 									{status() === true
 										? "Approved"
 										: status() === false
-										? "Rejected"
+										? "Please Revise"
 										: status() === null
 										? "Not Reviewed"
 										: "For Review"}
@@ -151,7 +156,7 @@ export default function DataItem() {
 
 								{/* Buttons to modify status */}
 							</div>
-							<div class="grid md:grid-cols-2">
+							<div class="grid md:grid-cols-2 mt-4">
 								<div class="">
 									<button
 										onClick={handleApprove}
@@ -163,12 +168,16 @@ export default function DataItem() {
 										onClick={handleReject}
 										class="bg-red-500 p-2 rounded-lg text-white"
 									>
-										Reject
+										Revise
 									</button>
-									<ul>
-										{comments().map((comment, index) => (
-											<li key={index}>{comment}</li>
-										))}
+									<ul class="px-4">
+										{item.comment ? (
+											<pre class="whitespace-pre-wrap mt-4 p-4 bg-slate-200">
+												{item.comment}
+											</pre>
+										) : (
+											"No Comment"
+										)}
 									</ul>
 								</div>
 
