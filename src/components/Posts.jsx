@@ -59,7 +59,7 @@ function Home(props) {
 
 	return (
 		<div>
-			<h2>List of Data Items:</h2>
+			<h2>List of Social Media To Approve:</h2>
 			<ul class="grid md:grid-cols-3 gap-4">
 				<Show when={loader()}>
 					<For each={filteredData}>
