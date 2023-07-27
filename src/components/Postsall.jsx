@@ -5,7 +5,7 @@ import { database, initializeData } from "~/api/dataStore";
 
 const DataItem = lazy(() => import("../routes/data/[...id]"));
 
-export default function Posts() {
+export default function Postsall() {
 	const [data, setData] = createSignal([]);
 	const [loading, setLoading] = createSignal(false);
 
@@ -53,16 +53,16 @@ function Home(props) {
 	setLoader(true);
 
 	// Filter the data to show only items with status equal to null or not approved
-	const filteredData = data.filter(
-		(item) => item.status === null || item.status === false
-	);
+	// const filteredData = data.filter(
+	// 	(item) => item.status === null || item.status === false
+	// );
 
 	return (
 		<div>
 			<h2>List of Data Items:</h2>
 			<ul class="grid md:grid-cols-3 gap-4">
 				<Show when={loader()}>
-					<For each={filteredData}>
+					<For each={data}>
 						{(item) => (
 							<li class="relative">
 								<A href={`/data/${item.id}`}>
