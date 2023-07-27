@@ -38,6 +38,9 @@ export default function Root() {
 								<li class={`border-b-2 ${active("/approved")} mx-1.5 sm:mx-6`}>
 									<A href="/approved">Approved</A>
 								</li>
+								<li class={`border-b-2 ${active("/all")} mx-1.5 sm:mx-6`}>
+									<A href="/all">All</A>
+								</li>
 							</ul>
 						</nav>
 						<Routes>
