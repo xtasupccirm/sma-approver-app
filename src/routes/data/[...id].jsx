@@ -1,4 +1,4 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, ref, createEffect, onCleanup } from "solid-js";
 import { useParams } from "@solidjs/router";
 import { database } from "~/api/dataStore";
 
@@ -23,6 +23,10 @@ export default function DataItem() {
 	const [status, setStatus] = createSignal(
 		item.status ?? (item.status === null ? null : false)
 	);
+
+	const [img, setImg] = createSignal([]);
+
+	setImg(item.imageurl);
 
 	console.log(comments());
 
@@ -130,14 +134,35 @@ export default function DataItem() {
 						<>
 							{/* Form for submitting a new comment */}
 							<h2>SCHEDULED {convertToEasternTime(item.postAtSpecificTime)}</h2>
+							<p>
+								You can scroll to left and right if there are multiple images.
+							</p>
 							<div class="grid md:grid-cols-2 gap-6">
-								<div>
-									<img
-										src={item.imageurl}
-										alt={item.caption}
-										class="max-h-[588px]"
-									/>
-								</div>
+								{item.imageurl.length < 1 ? (
+									<div>
+										<img
+											src={item.imageurl[0]}
+											alt={item.caption}
+											class="max-h-[588px]"
+										/>
+									</div>
+								) : (
+									<div class="flex overflow-scroll">
+										<For each={img()}>
+											{(item, i) => (
+												<>
+													<img
+														src={item}
+														alt={`This is false`}
+														class="max-h-[588px]"
+													/>
+													<span class="grid place-items-center">{`<-${i()}->`}</span>
+												</>
+											)}
+										</For>
+									</div>
+								)}
+
 								<div class="relative">
 									<div class="max-h-[588px] overflow-y-auto shadow-md p-2">
 										<pre class="whitespace-pre-wrap">{item.caption}</pre>

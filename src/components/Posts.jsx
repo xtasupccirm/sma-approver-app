@@ -66,7 +66,7 @@ function Home(props) {
 						{(item) => (
 							<li class="relative">
 								<A href={`/data/${item.id}`}>
-									<img src={item.imageurl} alt="" />
+									<img src={item.imageurl[0]} alt="" />
 									<p class="absolute bottom-0 bg-cyan-500 w-full">
 										SCHEDULED {convertToEasternTime(item.postAtSpecificTime)}
 									</p>
